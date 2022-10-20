@@ -1,0 +1,27 @@
+import json
+import re
+
+import requests
+
+url = "http://xxxxx/admin/publics/index.html"
+headers = {
+    'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0",
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
+    'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+    'Accept-Encoding': 'gzip, deflate',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Connection': 'close',
+    'Cookie': 'PHPSESSID=j3t2jmh9avipjjdi8o1k2bofo4; think_var=zh-cn',
+    'Upgrade-Insecure-Requests': '1'
+}
+def token():
+    response = requests.get(url, headers=headers)
+    response_str = str(response.text)
+    response_str1 = response_str[3914:3948]
+    response_re = re.compile(r'.*name=\\"__token__\\"\svalue=\\"(.*?)\\".*')
+    token=response_re.findall(response_str)
+
+    return token
+token()
+
+
